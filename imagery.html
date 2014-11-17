@@ -1,0 +1,36 @@
+<h1>Image processing</h1>
+
+We skip all the steps such as atmospheric and topographic corrections.
+
+<h2>Unsupervised image classification</h2>
+<ul>
+    <li><a href="http://grass.osgeo.org/grass71/manuals/i.cluster.html">i.cluster manual</a></li>
+    <li><a href="http://grass.osgeo.org/grass71/manuals/i.maxlik.html">i.maxlik manual</a></li>
+</ul>
+
+Use wxGUI histogram tool to compare different channels in the group.
+
+
+<h2>Image segmentation</h2>
+
+<code><pre>
+i.segment group=lsat7_2002 output=lsat7_2002_segments threshold=0.5 method=region_growing similarity=euclidean goodness=lsat7_2002_segments_goodness
+</pre></code>
+
+
+<h2>Texture extraction</h2>
+
+<code><pre>
+r.texture input=lsat7_2002_80 prefix=lsat7_2002_80_texture size=7 distance=1 method=corr,idm,entr
+</pre></code>
+
+Use scatter plot to compare IDM and Entr textures.
+
+
+<h2>Explore raster values</h2>
+
+Use query tool to get raster values.
+
+Use
+<em><a href="http://grass.osgeo.org/grass71/manuals/d.rast.num.html">d.rast.num</a></em>
+to show individual values of the raster.
