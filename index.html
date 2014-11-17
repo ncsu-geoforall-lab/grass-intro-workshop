@@ -1,0 +1,20 @@
+
+<ul>
+  <li><a href="http://www4.ncsu.edu/~akratoc/GRASS_intro/">Introduction</a> (<a href="http://fatra.cnr.ncsu.edu/temporal-grass-workshop/GRASS_intro.pdf">PDF slides</a>)</li>
+  <li>Unsupervised image classification
+    <ul>
+      <li><a href="http://grass.osgeo.org/grass71/manuals/i.cluster.html">i.cluster manual</a></li>
+      <li><a href="http://grass.osgeo.org/grass71/manuals/i.maxlik.html">i.maxlik manual</a></li>
+    </ul>
+  </li>
+  <li>Image segmentation
+    <code><pre>
+      i.segment group=lsat7_2002 output=lsat7_2002_segments threshold=0.5 method=region_growing similarity=euclidean goodness=lsat7_2002_segments_goodness
+    </pre></code>
+  </li>
+  <li>Texture extraction
+    <code><pre>
+      r.texture input=lsat7_2002_80 prefix=lsat7_2002_80_texture size=7 distance=1 method=corr,idm,entr
+    </pre></code>
+  </li>
+</ul>
