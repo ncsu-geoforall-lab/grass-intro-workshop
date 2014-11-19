@@ -39,14 +39,23 @@
 
 <!-- This is a generated file. Do not edit. -->
 
-<ul>
-    <li><a href="http://www4.ncsu.edu/~akratoc/GRASS_intro/">Introduction</a> (<a href="http://fatra.cnr.ncsu.edu/temporal-grass-workshop/GRASS_intro.pdf">PDF slides</a>)</li>
-    <li><a href="http://courses.ncsu.edu/mea592/common/Assign_GISmdmodel/a_dynprocess.html">Water flow modeling</a></li>
-    <li><a href="imagery.html">Image processing</a></li>
-    <li><a href="http://courses.ncsu.edu/mea592/common/Assign_GISmdmodel/a_mdlidar.html">Lidar data import and analysis</a></li>
-    <li><a href="http://fatra.cnr.ncsu.edu/temporal-grass-workshop/#visualization-of-solar-radiation">Solar radiation analysis</a></li>
-    <li><a href="relief.html">Shaded relief</a></li>
-</ul>
+<h2>Red relief</h2>
+
+There are also some ready-to-use tools similar to RRIM. The steps I used in GRASS GIS 7 to produce output which is very close to RRIM are:
+<code><pre>
+r.skyview (similar to openness used in the RRIM article)
+r.slope.aspect (to compute slope)
+r.colors for slope raster (change color table to):
+0% white
+100% red
+Then use 'Add various raster layers' button and 'Add shaded map' (d.shadedmap)
+Skyview raster is used as 'reliefmap' and the red slope as 'drapemap'.
+</pre></code>
+<!--
+http://www.isprs.org/proceedings/XXXVII/congress/2_pdf/11_ThS-6/08.pdf
+https://groups.google.com/forum/?hl=en#!searchin/lastools/grass/lastools/_Zv6ublzeSE/SRCa_WQ8gusJ
+https://groups.google.com/forum/#!topic/lastools/_Zv6ublzeSE
+-->
 
 </main>
 
