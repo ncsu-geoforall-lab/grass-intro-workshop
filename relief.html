@@ -1,0 +1,18 @@
+
+<h2>Red relief</h2>
+
+There are also some ready-to-use tools similar to RRIM. The steps I used in GRASS GIS 7 to produce output which is very close to RRIM are:
+<code><pre>
+r.skyview (similar to openness used in the RRIM article)
+r.slope.aspect (to compute slope)
+r.colors for slope raster (change color table to):
+0% white
+100% red
+Then use 'Add various raster layers' button and 'Add shaded map' (d.shadedmap)
+Skyview raster is used as 'reliefmap' and the red slope as 'drapemap'.
+</pre></code>
+<!--
+http://www.isprs.org/proceedings/XXXVII/congress/2_pdf/11_ThS-6/08.pdf
+https://groups.google.com/forum/?hl=en#!searchin/lastools/grass/lastools/_Zv6ublzeSE/SRCa_WQ8gusJ
+https://groups.google.com/forum/#!topic/lastools/_Zv6ublzeSE
+-->
