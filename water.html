@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Introduction to GRASS GIS</title>
+
+<link rel="shortcut icon" href="./logos/favicon.ico" />
+
+<!-- 3rd party styles -->
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.css" />
+<!--[if lte IE 8]><link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.ie.css" /><![endif]-->
+
+<script src="https://code.jquery.com/jquery-1.9.1.js"></script>
+
+<!-- Gallery Elastslide javascript -->
+<script type="text/javascript" src="elastislide/js/modernizr.custom.17475.js"></script>
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" type="text/css">
+
+<link href="layout.css" rel="stylesheet" type="text/css" media="screen">
+<link href="style.css" rel="stylesheet" type="text/css" media="screen">
+
+<!-- Gallery Elastslide CSS -->
+<link rel="stylesheet" type="text/css" href="elastislide/css/elastislide.css" />
+<link rel="stylesheet" type="text/css" href="elastislide/css/custom.css" />
+</head>
+
+<body>
+
+<div id="outercontainer">
+<div id="container">
+
+<header>
+<div id="header-image"><p><a href="index.html">Introduction to GRASS GIS</a></p></div>
+
+</header>
+
+<main>
+
+<!-- This is a generated file. Do not edit. -->
+<h1>Water flow modeling</h1>
+
+<h2>Streams and basins</h2>
+
+Set the region to the area where the computation should be performed
+(we are using the extent and resolution of the elevation raster map):
+
+<code><pre>
+g.region rast=elevation -p
+</pre></code>
+
+Compute accumulation (number of cells that drain through each cell)
+and basins.
+
+<code><pre>
+r.watershed -a -b elevation=elevation thresh=10000 accumulation=accumulation_10K basin=basin_10K
+</pre></code>
+
+To look at the basins in relation to elevation and accumulation,
+in the Layer Manager, right click on basins layer, select Change opacity level,
+and set the opacity to 40. Move the basins layer over the accumulation
+elevation layers. By zooming and checking and unchecking
+the elevation and accumulation layers explore their relations.
+
+<p>
+Now, find minimum and maximum of the accumulation raster map using right click
+on the layer and selecting Metadata or using the following command:
+
+<code><pre>
+r.info elevation=accumulation_10K
+</pre></code>
+
+Show only the potential streams by limiting the displayed values in Properties
+dialog of the accumulation layer or add a new layer using the following command
+(uncheck the existing accumulation layer):
+
+<code><pre>
+d.rast map=accumulation_10K values=10000-1000000
+</pre></code>
+
+Note that the upper limit is just arbitrary value higher than the raster maximum
+value.
+
+<p>
+Change the selection of values to see possible stream definitions.
+
+
+<h2>Convert streams and basins to vectors</h2>
+
+Convert basins raster to vector areas.
+
+<code><pre>
+r.to.vect -s input=basin_10K output=basin_10K type=area
+</pre></code>
+
+Using raster algebra select detailed stream cells with accumulation higher than 100.
+Use constant value where the stream potentially is and NULL (no data) value
+in all the other areas.
+
+<code><pre>
+r.mapcalc "streams_derived = if(abs(accumulation_10K) > 100, 1, null())"
+</pre></code>
+
+Some of the streams are now several cells wide, thin the raster streams,
+so that the stream position is clear before the conversion to vector.
+
+<code><pre>
+r.thin input=streams_derived output=streams_derived_thin
+</pre></code>
+
+Convert streams raster to vector lines.
+
+<code><pre>
+r.to.vect -s input=streams_derived_thin output=streams_derived type=line
+</pre></code>
+
+
+<h2>Flow pattern</h2>
+
+<code><pre>
+g.region rast=elev_lid792_1m -p
+r.flow elevation=elev_lid792_1m flowline=flow_lines flowlength=flow_length_1m flowaccum=flow_accumulation_1m
+</pre></code>
+
+
+<h2>Overland flow depth and discharge</h2>
+
+Besides elevation the <em>r.sim.water</em> module requires derivatives in
+X and Y direction which we can get using <em>r.slope.aspect</em> module.
+
+<code><pre>
+g.region rast=elev_lid792_1m -p
+r.slope.aspect elevation=elev_lid792_1m dx=elev_lid792_dx_1m dy=elev_lid792_dy_1m
+</pre></code>
+
+There is a lot of different settings which can be used to fine-tune the simulation.
+Here we are using mostly the defaults.
+
+<code><pre>
+r.sim.water elevation=elev_lid792_1m dx=elev_lid792_dx_1m dy=elev_lid792_dy_1m depth=water_depth_1m disch=water_discharge_1m nwalk=10000 rain_value=100 niter=5
+</pre></code>
+
+
+<h2>Learn more</h2>
+
+<ul>
+    <li><a href="http://courses.ncsu.edu/mea582/common/GIS_anal_grass/GIS_Anal_grflow.html">Flow routing watershed analysis (NCSU MEA582)</a></li>
+    <li><a href="http://courses.ncsu.edu/mea592/common/Assign_GISmdmodel/a_dynprocess.html">Geospatial simulations of dynamic processes: water flow (NCSU MEA592)</a></li>
+</ul>
+
+</main>
+
+<footer>
+
+<nav>
+<ul>
+<li><a href="index.html">Main page</a></li>
+<li><a href="https://github.com/ncsu-osgeorel/grass-intro-workshop" target='_blank'>GitHub repository</a></li>
+<li><a href='http://creativecommons.org/licenses/by-sa/4.0/' target='_blank'>CC BY-SA</a>
+2014 <a href="http://www4.ncsu.edu/~vpetras/">Vaclav Petras</a> &amp; <a href="http://geospatial.ncsu.edu/osgeorel/" target='_blank'>NCSU OSGeoREL</a> members</li>
+</ul>
+</nav>
+
+</footer>
+
+</div>
+</div>
+
+<script language="JavaScript" type="text/javascript" src="styling.js"></script>
+</body>
+</html>
+
