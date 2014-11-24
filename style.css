@@ -54,6 +54,21 @@ h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
     color: green;
 }
 
+/* pre and code */
+
+pre {
+    color: black;
+    /* background-color: rgb(90%, 90%, 90%); */
+    /* background-color: #998B6C; */
+    background-color: rgba(156, 138, 99, 0.17);
+    font-size: 120%;
+    padding-top: .3em;
+    padding-bottom: .3em;
+    padding-left: .5em;
+    padding-right: .2em;
+    overflow-x: auto;
+}
+
 /* main menu navigation */
 
 nav {
@@ -105,7 +120,7 @@ footer {
     position: relative;
     clear: both;
     margin: 0;
-    margin-top: 15px;
+    margin-top: 50px;
     padding: 0px;
     font-size: 80%;
     color: #888;
