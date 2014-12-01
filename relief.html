@@ -38,8 +38,40 @@
 <main>
 
 <!-- This is a generated file. Do not edit. -->
+<h1>Shaded relief</h1>
 
-<h2>Red relief</h2>
+
+<h2>Common shaded relief</h2>
+
+Creation of shaded relief map has two steps. First, compute the shaded relief:
+<code><pre>
+r.shaded.relief input=elevation output=elevation_shade
+</pre></code>
+
+You can use the created raster right-away if you want gray shaded relief.
+If you want to combine it with color, you can also add both rasters to
+the Layer Manager and set opacity of the shaded relief. However, for the best
+result use GRASS module to combine both rasters. Use Add shaded map item
+in the toolbar (under Add other raster layers) or use the following:
+
+<code><pre>
+d.shadedmap relief=elevation_shade drape=elevation
+</pre></code>
+
+This has the advantage of not creating additional raster while enabling to
+use the shaded relief in diffident ways. Alternatively, it is possible to use
+create the shaded raster map with color as a separate raster.
+
+We have used shaded relief raster for shading and elevation raster for the color,
+however any combination of rasters can be used to achieve different results.
+
+<p>
+Note: Before GRASS GIS 7 will be released <em>r.shaded.relief</em> will be
+renamed to <em>r.relief</em> and <em>d.shadedmap</em> to <em>d.shade</em>.
+There is also new <em>r.shade</em> module available.
+
+
+<h2>Different approach to shading</h2>
 
 There are also some ready-to-use tools similar to RRIM. The steps I used in GRASS GIS 7 to produce output which is very close to RRIM are:
 <code><pre>
