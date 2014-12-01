@@ -1,0 +1,81 @@
+<h1>Batch processing with Python</h1>
+
+<h2>Syntax</h2>
+
+First, try a standard command in Command console in Layer Manager:
+
+<code><pre>
+r.info map=elevation -g
+</pre></code>
+
+We are running <em>r.info</em> with an option <code>map</code> set to
+<code>elevation</code>
+Now, switch to Python shell and type the same command but in Python syntax:
+
+<code><pre>
+grass.read_command('r.info', map='elevation', flags='g')
+</pre></code>
+
+We used function <code>read_command()</code> from the <code>grass.script</code>
+package which is imported under the name <code>grass</code> in the Python shell
+in GRASS GUI. There are also other functions besides <code>read_command()</code>
+most notably <code>run_command()</code>, <code>write_command()</code>
+and <code>parse_command()</code>.
+
+The first parameter for functions from this group is the name of the GRASS module
+as string. Other parameters are options of the module. Python keyword arguments
+syntax is used for the options. Flags can be passed in a parameter
+<code>flags</code> where value of the parameter is a string containing all the
+flags we want to set. The general syntax is the following:
+
+<code><pre>
+function_name('module.name', option1=value1, option2=..., flags='flagletters')
+</pre></code>
+
+The function parameters are the same as module options, so you can just use
+standard module manual page to learn about the interface.
+
+
+<h2>Script of a procedure</h2>
+
+To launch a Python script from GUI, use File -> Launch Python script.
+
+<code><pre>
+import grass.script as gscript
+
+def main():
+    gscript.run_command('r.info', map='elevation', flags='g')
+
+if __name__ == "__main__":
+    main()
+</pre></code>
+
+
+<h2>Batch processing script</h2>
+
+<code><pre>
+import grass.script as gscript
+
+def main():
+    gscript.run_command('r.info', map='elevation', flags='g')
+
+if __name__ == "__main__":
+    main()
+</pre></code>
+
+
+
+<h2>Learn more</h2>
+
+<ul>
+    <li><a href="http://grasswiki.osgeo.org/wiki/GRASS_and_Python">GRASS and Python</a> at GRASS wiki</li>
+    <li><a href="http://grasswiki.osgeo.org/wiki/GRASS_Python_Scripting_Library">GRASS Python Scripting Library</a> at GRASS wiki</li>
+    <li><a href="http://grass.osgeo.org/grass70/manuals/libpython/script.html">grass.script</a> Python package documentation</li>
+    <li><a href="http://grass.osgeo.org/grass70/manuals/libpython/pygrass_index.html">PyGRASS documentation</a></li>
+    <li><a href="http://grasswiki.osgeo.org/wiki/Working_with_GRASS_without_starting_it_explicitly">Working with GRASS without starting it explicitly</a> at GRASS wiki</li>
+    <li><a href="http://grasswiki.osgeo.org/wiki/Tools_for_Python_programming">Tools for Python programming</a> at GRASS wiki</li>
+    <li>
+        <a href="http://geoinformatics.fsv.cvut.cz/gwiki/On_scripting_GRASS_GIS%3a_Building_location-independent_command_line_tools">On scripting GRASS GIS: Building location-independent command line tools</a>
+        (Geoinformatics FCE CTU)</li>
+    <li><a href="https://code.google.com/p/postgis-grass-r-py/wiki/0003_01_PythonForGrassGis">Python Scripts For GRASS GIS</a> (Python scripts for PostGIS, GRASS and R at Google Code)</li>
+</ul>
