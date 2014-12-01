@@ -75,8 +75,14 @@ function_name('module.name', option1=value1, option2=..., flags='flagletters')
 The function parameters are the same as module options, so you can just use
 standard module manual page to learn about the interface.
 
+Most of the GRASS functionality is available through modules and all of
+them can be called using the functions above. However, in some cases, it is
+more advantageous to use specialized Python functions. This is the case
+for <code>mapcalc()</code> function (wrapper for <em>r.mapcalc</em> module)
+and <code>list_strings()</code> function (wrapper for <em>r.list</em> module).
 
-<h2>Script of a procedure</h2>
+
+<h2>Combining multiple modules</h2>
 
 To launch a Python script from GUI, use File -> Launch Python script.
 
@@ -84,25 +90,78 @@ To launch a Python script from GUI, use File -> Launch Python script.
 import grass.script as gscript
 
 def main():
-    gscript.run_command('r.info', map='elevation', flags='g')
+    input_raster = 'elevation'
+    output_raster = 'high_areas'
+    stats = gscript.parse_command('r.univar', map='elevation', flags='g')
+    raster_mean = float(stats['mean'])
+    raster_stddev = float(stats['stddev'])
+    raster_high = raster_mean + raster_stddev
+    gscript.mapcalc('{r} = {a} > {m}'.format(r=output_raster, a=input_raster,
+                                             m=raster_high))
 
 if __name__ == "__main__":
     main()
 </pre></code>
 
 
-<h2>Batch processing script</h2>
+<h2>Processing many maps</h2>
 
 <code><pre>
 import grass.script as gscript
 
 def main():
-    gscript.run_command('r.info', map='elevation', flags='g')
+    rasters = ['lsat7_2002_10', 'lsat7_2002_20', 'lsat7_2002_30', 'lsat7_2002_40']
+    max_min = None
+    for raster in rasters:
+        stats = gscript.parse_command('r.univar', map=raster, flags='g')
+        if max_min is None or max_min &lt; stats['min']:
+            max_min = stats['min']
+    print max_min
 
 if __name__ == "__main__":
     main()
 </pre></code>
 
+
+<h2>Providing GRASS module interface for a script</h2>
+
+<code><pre>
+#!/usr/bin/env python
+
+#%module
+#% description: Adds the values of two rasters (A + B)
+#% keywords: raster
+#% keywords: algebra
+#% keywords: sum
+#%end
+#%option G_OPT_R_INPUT
+#% key: araster
+#% description: Name of input raster A in an expression A + B
+#%end
+#%option G_OPT_R_INPUT
+#% key: braster
+#% description: Name of input raster B in an expression A + B
+#%end
+#%option G_OPT_R_OUTPUT
+#%end
+
+import sys
+
+import grass.script as gscript
+
+def main():
+    options, flags = gscript.parser()
+    araster = options['araster']
+    braster = options['braster']
+    output = options['output']
+
+    gscript.mapcalc('{r} = {a} + {b}'.format(r=output,a=araster, b=braster))
+
+    return 0
+
+if __name__ == "__main__":
+    sys.exit(main())
+</pre></code>
 
 
 <h2>Learn more</h2>
@@ -115,8 +174,11 @@ if __name__ == "__main__":
     <li><a href="http://grasswiki.osgeo.org/wiki/Working_with_GRASS_without_starting_it_explicitly">Working with GRASS without starting it explicitly</a> at GRASS wiki</li>
     <li><a href="http://grasswiki.osgeo.org/wiki/Tools_for_Python_programming">Tools for Python programming</a> at GRASS wiki</li>
     <li>
-        <a href="http://geoinformatics.fsv.cvut.cz/gwiki/On_scripting_GRASS_GIS%3a_Building_location-independent_command_line_tools">On scripting GRASS GIS: Building location-independent command line tools</a>
-        (Geoinformatics FCE CTU)</li>
+        <a href="http://geoinformatics.fsv.cvut.cz/gwiki/On_scripting_GRASS_GIS%3a_Building_location-independent_command_line_tools">
+            On scripting GRASS GIS: Building location-independent command line tools
+        </a>
+        (Geoinformatics FCE CTU)
+    </li>
     <li><a href="https://code.google.com/p/postgis-grass-r-py/wiki/0003_01_PythonForGrassGis">Python Scripts For GRASS GIS</a> (Python scripts for PostGIS, GRASS and R at Google Code)</li>
 </ul>
 
