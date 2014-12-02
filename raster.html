@@ -2,24 +2,75 @@
 
 <h2>Raster algebra</h2>
 
+<h2>if statement</h2>
+
+Let's determine forested areas which are higher then certain elevation.
+Set computational region (both extent and resolution) to the landclass raster:
+
+<code><pre>
+g.region rast=landclass96
+</pre></code>
+
+See what are the land classes (raster categories) in the raster:
+
+<code><pre>
+r.report map=landclass96 units=p
+</pre></code>
+
+See also univariate statistics for the elevation raster:
+
+<code><pre>
+r.univar map=elevation
+</pre></code>
+
+Use raster algebra to select areas higher than chosen elevation and
+with forest land class:
+
+<code><pre>
+r.mapcalc "forest_high = if(elevation > 120 &amp;&amp; landclass96 == 5, 1, null())"
+</pre></code>
+
+
 <h2>Advanced raster algebra</h2>
 
-<h3>eval</h3>
+<h3>eval function</h3>
 
 If the output of the computation should be only one map
 but the expression is so complex that it is better
 to split it to several expressions, the eval function can be used:
 
 <code><pre>
-r.mapcalc &amp;&amp; EOF
-eval(elev_200 = elevation - 200, \
-     elev_5 = 5 * elevation, \
-     elev_p = pow(elev_5, 2))
-elevation_result = (0.5 * elev_200) + 0.8 * elev_p
-EOF
+r.mapcalc "eval(elev_200 = elevation - 200, elev_5 = 5 * elevation, elev_p = pow(elev_5, 2)); elevation_result = (0.5 * elev_200) + 0.8 * elev_p"
 </pre></code>
-This example uses unix-like <tt>&amp;&amp;</tt> EOF syntax to provide
-input to r.mapcalc.
 
 
-<h3>[] operator</h3>
+<h3>neighborhood operator []</h3>
+
+Apply low pass filter (smoothing) on a Landsat image using <em>r.mapcalc</em>:
+
+<code><pre>
+r.mapcalc "lsat7_2002_10_smooth = (lsat7_2002_10[-1,-1] + lsat7_2002_10[-1,0] + lsat7_2002_10[1,1] + lsat7_2002_10[0,-1] + lsat7_2002_10[0,0] + lsat7_2002_10[0,1] + lsat7_2002_10[1,-1] + lsat7_2002_10[1,0] + lsat7_2002_10[1,1]) / 9"
+</pre></code>
+
+Set the same color table as the original raster map has:
+
+<code><pre>
+r.colors map=lsat7_2002_10_smooth raster=lsat7_2002_10
+</pre></code>
+
+Use Map Swipe to compare original and resulting map.
+Map Swipe is available from File menu or using:
+
+<code><pre>
+g.gui.mapswipe first=lsat7_2002_10 second=lsat7_2002_10_smooth
+</pre></code>
+
+Note that in this case the same operation which was done using
+<em>r.mapcalc</em> could be done using <em>r.neighbors</em> module.
+
+
+<h2>Learn more</h2>
+
+<ul>
+    <li><a href="http://grass.osgeo.org/grass70/manuals/rasterintro.html">Raster data processing in GRASS GIS</a> (intro in manual)</li>
+</ul>
