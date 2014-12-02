@@ -1,20 +1,61 @@
 <h1>Image processing</h1>
 
-We skip all the steps such as atmospheric and topographic corrections.
+For simplicity, we skip all the steps such as atmospheric and topographic
+corrections.
+
 
 <h2>Unsupervised image classification</h2>
-<ul>
-    <li><a href="http://grass.osgeo.org/grass71/manuals/i.cluster.html">i.cluster manual</a></li>
-    <li><a href="http://grass.osgeo.org/grass71/manuals/i.maxlik.html">i.maxlik manual</a></li>
-</ul>
 
-Use wxGUI histogram tool to compare different channels in the group.
+Set the computation region to the one of the raster maps we will work with:
+
+<code><pre>
+g.region rast=lsat7_2002_10 -p
+</pre></code>
+
+List the raster maps we have:
+
+<code><pre>
+g.list type=rast
+</pre></code>
+
+Imagery group holds a group of raster, usually different bands which will be
+our case, too. Subgroups works in the same way as groups and are used to
+organize rasters inside a grpup. Now, use <em>i.group</em> to register Landsat
+images to a group and subgroup with the same name:
+<!-- VIZ, NIR, MIR -->
+
+<code><pre>
+i.group group=lsat7_2002 subgroup=lsat7_2002 input=lsat7_2002_10,lsat7_2002_20,lsat7_2002_30,lsat7_2002_40,lsat7_2002_50,lsat7_2002_70
+</pre></code>
+
+Use wxGUI histogram tool in Map Display to compare different channels in the group.
+
+Now, generate spectral signatures using a clustering algorithm.
+It is not needed to specify all the rasters, we just refer to them
+using group and subgroup.
+The signatures are stored within the subgroup.
+
+<code><pre>
+i.cluster group=my_lsat7_2002 subgroup=my_lsat7_2002 signaturefile=sig_cluster_lsat2002 classes=10
+</pre></code>
+
+Now we have signatures which can be used for a maximum-likelihood classification:
+
+<code><pre>
+i.maxlik group=lsat7_2002 subgroup=lsat7_2002 signaturefile=sig_cluster_lsat2002 output=lsat7_2002_cluster_classes
+</pre></code>
+
+Look at the result using GUI or the following command:
+
+<code><pre>
+d.rast lsat7_2002_cluster_classes
+</pre></code>
 
 
 <h2>Image segmentation</h2>
 
 <code><pre>
-i.segment group=lsat7_2002 output=lsat7_2002_segments threshold=0.5 method=region_growing similarity=euclidean goodness=lsat7_2002_segments_goodness
+i.segment group=lsat7_2002 output=lsat7_2002_segments threshold=0.5 method=region_growing similarity=euclidean
 </pre></code>
 
 
@@ -24,7 +65,7 @@ i.segment group=lsat7_2002 output=lsat7_2002_segments threshold=0.5 method=regio
 r.texture input=lsat7_2002_80 prefix=lsat7_2002_80_texture size=7 distance=1 method=corr,idm,entr
 </pre></code>
 
-Use scatter plot to compare IDM and Entr textures.
+Use scatter plot in Map Display to compare IDM and Entr textures.
 
 
 <h2>Explore raster values</h2>
@@ -32,10 +73,39 @@ Use scatter plot to compare IDM and Entr textures.
 Use query tool to get raster values.
 
 Use
-<em><a href="http://grass.osgeo.org/grass71/manuals/d.rast.num.html">d.rast.num</a></em>
+<em><a href="http://grass.osgeo.org/grass70/manuals/d.rast.num.html">d.rast.num</a></em>
 to show individual values of the raster.
 
 
 <h2>Color enhancement</h2>
 
-<a href="http://grass.osgeo.org/grass71/manuals/i.colors.enhance.html">i.colors.enhance</a>
+Add RGB layer to the Layer Manager or use the following command:
+
+<code><pre>
+d.rgb blue=lsat7_2002_10 green=lsat7_2002_20 red=lsat7_2002_30
+</pre></code>
+
+Apply color enhancement to the blue, green and red bands:
+
+<code><pre>
+i.colors.enhance blue=lsat7_2002_10 green=lsat7_2002_20 red=lsat7_2002_30 strength=95
+</pre></code>
+
+Now look again at the RGB layer (redraw in Map Display).
+The module <em>i.colors.enhance</em> does not create new rasters,
+it just creates new color tables.
+
+<!--
+http://landsat.usgs.gov/band_designations_landsat_satellites.php
+http://en.wikipedia.org/wiki/Light
+-->
+
+
+<h2>Learn more</h2>
+
+<ul>
+    <li><a href="http://grass.osgeo.org/grass70/manuals/topic_classification.html">Topic classification in GRASS GIS manual</a></li>
+    <li><a href="http://grass.osgeo.org/grass70/manuals/imageryintro.html">Image processing in GRASS GIS</a> (intro in manual)</li>
+    <li><a href=""></a></li>
+    <li><a href=""></a></li>
+</ul>
