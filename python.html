@@ -124,7 +124,7 @@ if __name__ == "__main__":
 </pre></code>
 
 
-<h2>Providing GRASS module interface for a script</h2>
+<h2>Providing GRASS module interface to a script</h2>
 
 <code><pre>
 #!/usr/bin/env python
@@ -147,8 +147,6 @@ if __name__ == "__main__":
 #%end
 
 
-import sys
-
 import grass.script as gscript
 
 
@@ -164,11 +162,11 @@ def main():
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    main()
 
 </pre></code>
 
-Note that the previous code samples were messing some whitespace which Python
+Note that the previous code samples were missing some whitespace which Python
 PEP8 style guide requires but this last sample fulfills all the requirements.
 You should always use <em>pep8</em> to check your syntax and style or set
 your editor to do it for you.
@@ -180,6 +178,7 @@ your editor to do it for you.
     <li><a href="http://grasswiki.osgeo.org/wiki/GRASS_and_Python">GRASS and Python</a> at GRASS wiki</li>
     <li><a href="http://grasswiki.osgeo.org/wiki/GRASS_Python_Scripting_Library">GRASS Python Scripting Library</a> at GRASS wiki</li>
     <li><a href="http://grass.osgeo.org/grass70/manuals/libpython/script.html">grass.script</a> Python package documentation</li>
+    <li><a href="http://grass.osgeo.org/grass70/manuals/libpython/script_intro.html">grass.script</a> Python package introduction (similar to this material)</li>
     <li><a href="http://grass.osgeo.org/grass70/manuals/libpython/pygrass_index.html">PyGRASS documentation</a></li>
     <li><a href="http://grasswiki.osgeo.org/wiki/Working_with_GRASS_without_starting_it_explicitly">Working with GRASS without starting it explicitly</a> at GRASS wiki</li>
     <li><a href="http://grasswiki.osgeo.org/wiki/Tools_for_Python_programming">Tools for Python programming</a> at GRASS wiki</li>
