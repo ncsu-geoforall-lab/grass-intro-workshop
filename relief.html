@@ -5,46 +5,49 @@
 
 Creation of shaded relief map has two steps. First, compute the shaded relief:
 <code><pre>
-r.shaded.relief input=elevation output=elevation_shade
+r.relief input=elevation output=elevation_shade
 </pre></code>
 
 You can use the created raster right-away if you want gray shaded relief.
 If you want to combine it with color, you can also add both rasters to
 the Layer Manager and set opacity of the shaded relief. However, for the best
-result use GRASS module to combine both rasters. Use Add shaded map item
+result use <em>d.shade</em> module to combine both rasters.
+Use Add shaded map item
 in the toolbar (under Add other raster layers) or use the following:
 
 <code><pre>
-d.shadedmap relief=elevation_shade drape=elevation
+d.shade shade=elevation_shade color=elevation
 </pre></code>
 
 This has the advantage of not creating additional raster while enabling to
-use the shaded relief in diffident ways. Alternatively, it is possible to use
-create the shaded raster map with color as a separate raster.
+use the shaded relief in diffident ways. Alternatively, it is possible to
+create the shaded raster map with color as a separate raster using
+<em>r.shade</em> module which does the same
+as <em>d.shade</em> but instead of rendering the image it creates
+a raster map.
 
+<p>
 We have used shaded relief raster for shading and elevation raster for the color,
 however any combination of rasters can be used to achieve different results.
 
-<p>
-Note: Before GRASS GIS 7 will be released <em>r.shaded.relief</em> will be
-renamed to <em>r.relief</em> and <em>d.shadedmap</em> to <em>d.shade</em>.
-There is also new <em>r.shade</em> module available.
 
+<h2>Sky-view factor</h2>
 
-<h2>Different approach to shading</h2>
+Install <em>r.skyview</em> module from Addons using <em>g.extension</em>:
 
-There are also some ready-to-use tools similar to RRIM. The steps I used in GRASS GIS 7 to produce output which is very close to RRIM are:
 <code><pre>
-r.skyview (similar to openness used in the RRIM article)
-r.slope.aspect (to compute slope)
-r.colors for slope raster (change color table to):
-0% white
-100% red
-Then use 'Add various raster layers' button and 'Add shaded map' (d.shadedmap)
-Skyview raster is used as 'reliefmap' and the red slope as 'drapemap'.
+g.extension r.skyview
 </pre></code>
-<!--
-http://www.isprs.org/proceedings/XXXVII/congress/2_pdf/11_ThS-6/08.pdf
-https://groups.google.com/forum/?hl=en#!searchin/lastools/grass/lastools/_Zv6ublzeSE/SRCa_WQ8gusJ
-https://groups.google.com/forum/#!topic/lastools/_Zv6ublzeSE
--->
+
+Now you can compute the sky-view factor:
+
+<code><pre>
+r.skyview input=elevation output=elevation_skyview ndir=8
+</pre></code>
+
+A higher number of directions makes the computation longer but
+it gives a finer result.
+
+<p>
+As suggested above, sky-view factor can be combined with other rasters
+using <em>r.shade</em> module.
