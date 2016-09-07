@@ -266,6 +266,14 @@ figure {
     margin: 10px auto; /* not needed unless you want centered */
 }
 
+figcaption::before {
+    content: "Figure: ";
+}
+
+figcaption {
+    font-style: italic;
+}
+
 iframe {
     display: block;
     margin-left: auto;
