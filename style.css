@@ -23,8 +23,12 @@ body {
     font-size: 150%;
     font-weight: bold;
     font-size: 40px;
-    color: #006600;
+    color: #1D1D1D;
     text-shadow: 0 0 20px white, 0 0 18px white, 0 0 16px white, 0 0 14px white, 0 0 12px white, 0 0 10px white, 0 0 8px white, 0 0 6px white;
+}
+
+#header-image p a {
+    color: #1D1D1D;
 }
 
 /* links */
@@ -142,7 +146,7 @@ footer nav li {
     float: left;
     margin-right: 0px;
     border-right: 1px solid #aaa;
-    padding: 0 20px;
+    padding: 0 10px;
 }
 
 footer nav li:last-child {
@@ -251,11 +255,23 @@ figure .image {
     width: 100%;
 }
 
+figure img {
+    max-width: 100%;
+}
+
 figure {
     text-align: center;
     display: table;
-    max-width: 50%; /* demo; set some amount (px or %) if you can */
+    max-width: 100%;
     margin: 10px auto; /* not needed unless you want centered */
+}
+
+figcaption::before {
+    content: "Figure: ";
+}
+
+figcaption {
+    font-style: italic;
 }
 
 iframe {
