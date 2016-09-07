@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Introduction to GRASS GIS</title>
+
+<link rel="shortcut icon" href="favicon.png" />
+
+<link href="layout.css" rel="stylesheet" type="text/css" media="screen">
+<link href="style.css" rel="stylesheet" type="text/css" media="screen">
+
+</head>
+
+<body>
+
+<div id="outercontainer">
+<div id="container">
+
+<header>
+<div id="header-image"><p><a href="index.html">Introduction to GRASS GIS</a></p></div>
+
+</header>
+
+<main>
+
+<!-- This is a generated file. Do not edit. -->
+<h1>Vectors</h1>
+
+<h2>Importing a Shapefile</h2>
+
+Download sample Shapefile
+<a href="files/points_of_interest.zip">points_of_interest.zip</a>
+and unzip it.
+
+<code><pre>
+v.in.ogr input=/path/to/points_of_interest.shp output=points_of_interest
+</pre></code>
+
+
+<h2>Generating a hexagonal grid</h2>
+
+<code><pre>
+g.region vector=points_of_interest res=2000 -pa
+</pre></code>
+
+<code><pre>
+v.mkgrid map=hexagons -h
+</pre></code>
+
+
+<h2>Computing statistics of points in polygons</h2>
+
+<code><pre>
+v.vect.stats points=points_of_interest areas=hexagons count_column=count
+</pre></code>
+
+<code><pre>
+v.colors map=hexagons use=attr column=count color=viridis
+</pre></code>
+
+<figure>
+<img src="img/gui_search_hexagons.png">
+<figcaption>Colored hexagons and modules used to create them</figcaption>
+</figure>
+
+
+<h2>Learn more</h2>
+
+<ul>
+    <li><a href="http://grass.osgeo.org/grass70/manuals/vectorintro.html">Vector data processing in GRASS GIS</a> (intro in manual)</li>
+    <li><a href="https://grasswiki.osgeo.org/wiki/Vector_Data">Vector data in GRASS GIS</a></li>
+    <li><a href="https://grasswiki.osgeo.org/wiki/Vector_Database_Management">Vector database management</a></li>
+    
+</ul>
+
+
+</main>
+
+<footer>
+
+<nav>
+<ul>
+<li title="To the main index page">
+    <a href="index.html">Main page</a>
+</li>
+<li title="Use, fork, modify, contribute">
+    <a href="https://github.com/ncsu-geoforall-lab/grass-intro-workshop" target='_blank'>GitHub repository</a>
+</li>
+<li title="Copyright and license (not applicable to linked materials)">
+    <a href='http://creativecommons.org/licenses/by-sa/4.0/' target='_blank'>CC BY-SA</a>
+    2014-2016 <a href="http://www4.ncsu.edu/~vpetras/">Vaclav Petras</a> &amp;
+    <a href="http://geospatial.ncsu.edu/osgeorel/" target='_blank'>NCSU GeoForAll Lab</a> members
+</li>
+</ul>
+</nav>
+
+</footer>
+
+</div>
+</div>
+
+</body>
+</html>
