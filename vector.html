@@ -1,0 +1,49 @@
+<h1>Vectors</h1>
+
+<h2>Importing a Shapefile</h2>
+
+Download sample Shapefile
+<a href="files/points_of_interest.zip">points_of_interest.zip</a>
+and unzip it.
+
+<code><pre>
+v.in.ogr input=/path/to/points_of_interest.shp output=points_of_interest
+</pre></code>
+
+
+<h2>Generating a hexagonal grid</h2>
+
+<code><pre>
+g.region vector=points_of_interest res=2000 -pa
+</pre></code>
+
+<code><pre>
+v.mkgrid map=hexagons -h
+</pre></code>
+
+
+<h2>Computing statistics of points in polygons</h2>
+
+<code><pre>
+v.vect.stats points=points_of_interest areas=hexagons count_column=count
+</pre></code>
+
+<code><pre>
+v.colors map=hexagons use=attr column=count color=viridis
+</pre></code>
+
+<figure>
+<img src="img/gui_search_hexagons.png">
+<figcaption>Colored hexagons and modules used to create them</figcaption>
+</figure>
+
+
+<h2>Learn more</h2>
+
+<ul>
+    <li><a href="http://grass.osgeo.org/grass70/manuals/vectorintro.html">Vector data processing in GRASS GIS</a> (intro in manual)</li>
+    <li><a href="https://grasswiki.osgeo.org/wiki/Vector_Data">Vector data in GRASS GIS</a></li>
+    <li><a href="https://grasswiki.osgeo.org/wiki/Vector_Database_Management">Vector database management</a></li>
+    
+</ul>
+
