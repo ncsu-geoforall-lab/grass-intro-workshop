@@ -255,10 +255,14 @@ figure .image {
     width: 100%;
 }
 
+figure img {
+    max-width: 100%;
+}
+
 figure {
     text-align: center;
     display: table;
-    max-width: 50%; /* demo; set some amount (px or %) if you can */
+    max-width: 100%;
     margin: 10px auto; /* not needed unless you want centered */
 }
 

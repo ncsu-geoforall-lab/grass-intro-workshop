@@ -1,0 +1,75 @@
+<h1>Network analysis using four interfaces</h1>
+
+<h2>Using convenient GUI wrapper</h2>
+
+<figure>
+<img src="img/network_open.png">
+<figcaption>Open network analysis tool</figcaption>
+</figure>
+
+<figure>
+<img src="img/network_pick_points.png">
+<figcaption></figcaption>
+</figure>
+
+<figure>
+<img src="img/network_result.png">
+<figcaption></figcaption>
+</figure>
+
+
+<h2>Using a module directly through GUI</h2>
+
+<figure>
+<img src="img/network_select_vector.png">
+<figcaption></figcaption>
+</figure>
+
+<figure>
+<img src="img/network_enter_name.png">
+<figcaption></figcaption>
+</figure>
+
+<figure>
+<img src="img/network_pick_coordinates.png">
+<figcaption></figcaption>
+</figure>
+
+<figure>
+<img src="img/network_format.png">
+<figcaption></figcaption>
+</figure>
+
+<figure>
+<img src="img/network_format_manual.png">
+<figcaption></figcaption>
+</figure>
+
+
+<h2>Using unix-like command line</h2>
+
+<code><pre>
+v.net.path input=streets_wake output=shortest_path_2 &lt;&lt;EOF
+1 622880.2 228097.3 666860.6 236729.0
+EOF
+</pre></code>
+
+
+<h2>Using Python</h2>
+
+<code><pre>
+import grass.script as gs
+network = "streets_wake"
+path = "shortest_path_3"
+points = "1 622880.2 228097.3 666860.6 236729.0"
+gs.write_command('v.net.path', input=network, output=path, stdin=points)
+</pre></code>
+
+
+<h2>Learn more</h2>
+
+<ul>
+    <li><a href="https://grasswiki.osgeo.org/wiki/Turns_in_the_vector_network_analysis">Turns in the vector network analysis</a></li>
+    <li><a href="https://grasswiki.osgeo.org/wiki/WxGUI_Vector_Network_Analysis_Tool">WxGUI vector network analysis tool</a></li>
+</ul>
+
