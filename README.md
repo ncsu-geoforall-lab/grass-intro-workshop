@@ -3,14 +3,14 @@ Introduction to GRASS GIS
 
 The workshop page is availabe at:
 
-*  http://ncsu-osgeorel.github.io/grass-intro-workshop.
+*  http://ncsu-geoforall-lab.github.io/grass-intro-workshop.
 
 Build and publish
 -----------------
 
 Create a new clone of the repository. Name the directory `grass-intro-workshop-gh-pages` and place it at the same level as the clone where you work with master branch.
 
-    git clone git@github.com:ncsu-osgeorel/grass-intro-workshop.git grass-intro-workshop-gh-pages
+    git clone git@github.com:ncsu-geoforall-lab/grass-intro-workshop.git grass-intro-workshop-gh-pages
 
 Checkout `gh-pages` branch:
 
