@@ -2,7 +2,7 @@
 
 # builds pages from source
 
-OUTDIR=../grass-intro-workshop-gh-pages
+OUTDIR=build
 
 mkdir -p $OUTDIR
 
