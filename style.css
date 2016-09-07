@@ -23,8 +23,12 @@ body {
     font-size: 150%;
     font-weight: bold;
     font-size: 40px;
-    color: #006600;
+    color: #1D1D1D;
     text-shadow: 0 0 20px white, 0 0 18px white, 0 0 16px white, 0 0 14px white, 0 0 12px white, 0 0 10px white, 0 0 8px white, 0 0 6px white;
+}
+
+#header-image p a {
+    color: #1D1D1D;
 }
 
 /* links */
