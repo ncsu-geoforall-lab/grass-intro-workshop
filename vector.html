@@ -6,6 +6,10 @@ Download sample Shapefile
 <a href="files/points_of_interest.zip">points_of_interest.zip</a>
 and unzip it.
 
+<p>
+Import the file using <em>v.in.ogr</em> module.
+Note that you need to specify the full path to the file.
+
 <code><pre>
 v.in.ogr input=/path/to/points_of_interest.shp output=points_of_interest
 </pre></code>
@@ -13,9 +17,18 @@ v.in.ogr input=/path/to/points_of_interest.shp output=points_of_interest
 
 <h2>Generating a hexagonal grid</h2>
 
+To compute point density in a hexagonal grid for the vector map
+<em>points_of_interest</em> use the vector map itself to set extent of
+the computational region. The resolution is based on the desired size of
+hexagons.
+
 <code><pre>
 g.region vector=points_of_interest res=2000 -pa
 </pre></code>
+
+Although computation region is usually not used in vector processing,
+the hexagonal grid is created as a vector map based on the previously
+selected extent and size of the grid.
 
 <code><pre>
 v.mkgrid map=hexagons -h
@@ -24,9 +37,15 @@ v.mkgrid map=hexagons -h
 
 <h2>Computing statistics of points in polygons</h2>
 
+The following counts the number of points per hexagon using the
+<em>v.vect.stats</em> module.
+
 <code><pre>
 v.vect.stats points=points_of_interest areas=hexagons count_column=count
 </pre></code>
+
+The last command sets the vector map color table to viridis
+based on the count column. Use color table ryb if you have GRASS GIS 7.0.
 
 <code><pre>
 v.colors map=hexagons use=attr column=count color=viridis
@@ -44,6 +63,5 @@ v.colors map=hexagons use=attr column=count color=viridis
     <li><a href="http://grass.osgeo.org/grass70/manuals/vectorintro.html">Vector data processing in GRASS GIS</a> (intro in manual)</li>
     <li><a href="https://grasswiki.osgeo.org/wiki/Vector_Data">Vector data in GRASS GIS</a></li>
     <li><a href="https://grasswiki.osgeo.org/wiki/Vector_Database_Management">Vector database management</a></li>
-    
-</ul>
 
+</ul>
