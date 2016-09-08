@@ -28,54 +28,165 @@
 
 <h2>Using convenient GUI wrapper</h2>
 
+After opening GRASS GIS, add vector map named <em>streets_wake</em>.
+In Map Display, find toolbar icon which says <em>Analyze map</em>
+and in the submenu, select <em>Vector network analysis tool</em>.
+
 <figure>
 <img src="img/network_open.png">
 <figcaption>Open network analysis tool</figcaption>
 </figure>
 
+In the <em>Parameters</em> check that you have selected <em>Shortest path</em>
+and the input is set to <em>streets_wake</em>.
+Then switch to <em>Points</em> tab. Select a point in the list
+and click the mouse cursor button which says <em>Insert points from Map Display</em>.
+Click somewhere in the Map Display where you want one end of the path.
+Click again to place the second end of the path.
+
 <figure>
 <img src="img/network_pick_points.png">
-<figcaption></figcaption>
+<figcaption>Pick two points in the Map Display</figcaption>
 </figure>
+
+To start the analysis, click the run (play) button in the toolbar at the top.
+You can view the textual output of for the analysis in <em>Output</em> tab.
+Once the analysis is finished, you can see the result in the Map Display.
+Using a button in the toolbar you can save the result permanently as
+a vector map.
 
 <figure>
 <img src="img/network_result.png">
-<figcaption></figcaption>
+<figcaption>Resulting path and textual output from the module</figcaption>
 </figure>
 
 
 <h2>Using a module directly through GUI</h2>
 
+Behind every most features in the GRASS GIS GUI, there is a GRASS GIS
+<em>module</em> which does the actual analysis and processing.
+Not all the modules are wrapped in a specialized GUI, mostly because
+it is not needed. Instead all modules have standardized interface
+which looks similar for all the modules.
+You can open the the module through the main menu or
+the <em>Search modules</em> tab. The shortest path can be found in
+<em>Vector &rarr; Network analysis &rarr; Shortest path</em>.
+If you need to search for the module, use the search in the
+<em>Search modules</em> tab. On the other hand, if you already know
+the name of the module, you can use the <em>Command console</em> tab
+type the name of the module and press Enter. The module we are using
+is called
+<a href="https://grass.osgeo.org/grass70/manuals/v.net.path.html"><em>v.net.path</em></a>.
+
+<p>
+When you have the GUI, you can select an existing vector map as input.
+You can see all the vector maps which are in the GRASS GIS Spatial Database.
+We will use <em>streets_wake</em>.
+
 <figure>
 <img src="img/network_select_vector.png">
-<figcaption></figcaption>
+<figcaption>Select the network from existing vector maps</figcaption>
 </figure>
+
+We will enter manually the name of the newly created vector map
+which will show the shortest path. We can type, for example <em>shortest_path</em>.
 
 <figure>
 <img src="img/network_enter_name.png">
-<figcaption></figcaption>
+<figcaption>Enter name of the new vector map</figcaption>
 </figure>
+
+In case you use a name of the existing map, the module will not overwrite
+existing data and will tell you that the vector map already exists.
+If you wish to replace the old data by the new output, you can specify
+this by checking the check box which says
+<em>Allow output files to overwrite existing files</em>.
+
+<p>
+The coordinates are specified in a text file but for our convenience,
+the GUI offers an option to edit the file directly.
+However, first we need to get the coordinates of our starting and end
+point. In the Map Display, we can use right mouse click to get coordinates
+of the current position.
+We copy the coordinates for both points to the large input box for the
+file parameter.
+
+<p>
+The file format requires that coordinates for both points are on a single
+line (one line is a one pair of points) and that coordinates separated
+by a space, so we need to replace commas by spaces. We also need
+to add number one (or any other number) at the beginning of the line to
+mark our pair of points (different numbers would be entered for different lines
+if we had more pairs of points).
+
+<p>
+To understand which format is required for the input file, you can referrer
+to the manual. The module GUI has a <em>Help</em> button which takes you
+to the <em>Manual</em> tab where you can learn all the details about
+certain behavior of the module.
 
 <figure>
 <img src="img/network_pick_coordinates.png">
-<figcaption></figcaption>
+<figcaption>Pick position in the Map Display and copy the coordinates with right click</figcaption>
 </figure>
 
 <figure>
 <img src="img/network_format.png">
-<figcaption></figcaption>
+<figcaption>Enter two points to the module dialog</figcaption>
 </figure>
 
 <figure>
 <img src="img/network_format_manual.png">
-<figcaption></figcaption>
+<figcaption>Find the format specification of the input points in the manual</figcaption>
 </figure>
 
 
-<h2>Using unix-like command line</h2>
+<h2>Using command line</h2>
+
+<em>v.net.path</em> module accepts a file with a list of points to
+connect by shortest path. The syntax of the file is explained in the
+<a href="https://grass.osgeo.org/grass70/manuals/v.net.path.html"><em>v.net.path</em> manual</a>.
+We have just one pair of points, so we need to create a file like this:
 
 <code><pre>
-v.net.path input=streets_wake output=shortest_path_2 &lt;&lt;EOF
+1 622880.2 228097.3 666860.6 236729.0
+</pre></code>
+
+You can use any (plain) text editor to create the file. Name it
+for example <code>points.txt</code>.
+You will need to specify the full path to the created file in the command
+line. Depending on your operating system and workflow, you may want to
+copy the path the the clipboard or change the current directory in
+the command line to the directory with the file so that you avoid typing
+manually the whole path.
+
+<p>
+Now we can run the <em>v.net.path</em> module from command line:
+
+<code><pre>
+v.net.path input=streets_wake output=shortest_path_3 file=/path/to/points.txt
+</pre></code>
+
+Commands can be executed in the <em>Command console</em> tab or the
+system command line which was opened with GRASS GIS.
+It's worth noting that this is the way how are the examples in the manual
+usually presented. To reproduce the examples using the GUI, just find
+the given option by its name, which is the portion in front of the equal
+sign and fill whatever is after the equal sign.
+
+<p>
+Alternatively, if you have Bash or similar command line available, you can
+provide the parameters to <em>v.net.path</em> in the command line.
+For the list of points, you can use standard input where <em>v.net.path</em>
+expects the list of points if no file name was provided.
+
+<p>
+To provide the standard input on the command line, we can use
+<a href="https://en.wikipedia.org/wiki/Here_document"><em>here document</em></a>
+syntax (<code>&lt;&lt;EOF...EOF</code>):
+
+<code><pre>
+v.net.path input=streets_wake output=shortest_path_3 &lt;&lt;EOF
 1 622880.2 228097.3 666860.6 236729.0
 EOF
 </pre></code>
@@ -83,13 +194,39 @@ EOF
 
 <h2>Using Python</h2>
 
+In Python, we will use the fact that <em>v.net.path</em> reads the list
+of points from the
+<a href="https://en.wikipedia.org/wiki/Standard_streams"><em>standard input</em></a>
+when no file name is provided.
+The function
+<a href="https://grass.osgeo.org/grass70/manuals/libpython/script.html#script.core.write_command"><code>write_command</code></a>
+from the module <code>grass.script</code>
+which is available in GRASS GIS feeds the standard input to the module.
+The content, our list of points, is provided in the <code>stdin</code>
+parameter.
+
 <code><pre>
+# do the import
 import grass.script as gs
+
+# set the variables
 network = "streets_wake"
-path = "shortest_path_3"
+path = "shortest_path_4"
 points = "1 622880.2 228097.3 666860.6 236729.0"
+
+# run the module
 gs.write_command('v.net.path', input=network, output=path, stdin=points)
 </pre></code>
+
+You can paste and run the lines above one by one to the Python tab
+in GRASS GIS GUI or your can use <em>Paste special</em> right click function
+to paste all lines at once if it is available in your version.
+Alternatively, you can use a Python editor to create a Python script.
+Since version 7.2 GRASS GIS comes with an integrated Python editor,
+or you can use any Python or text editor you want.
+To run the script, you can use <em>File &rarr; Launch script</em>
+in the Layer Manager window, or if you are using the Python editor
+integrated in GRASS GIS, just press the run (play) button in the toolbar.
 
 
 <h2>Learn more</h2>
@@ -98,7 +235,6 @@ gs.write_command('v.net.path', input=network, output=path, stdin=points)
     <li><a href="https://grasswiki.osgeo.org/wiki/Turns_in_the_vector_network_analysis">Turns in the vector network analysis</a></li>
     <li><a href="https://grasswiki.osgeo.org/wiki/WxGUI_Vector_Network_Analysis_Tool">WxGUI vector network analysis tool</a></li>
 </ul>
-
 
 </main>
 

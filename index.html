@@ -51,7 +51,7 @@
 <h2>Table of contents</h2>
 
 <ul>
-    <li><a href="http://www4.ncsu.edu/~akratoc/GRASS_intro/">Introduction</a> (<a href="http://fatra.cnr.ncsu.edu/temporal-grass-workshop/GRASS_intro.pdf">PDF slides</a>)</li>
+    <li><a href="intro.html">Introduction</a></li>
     <li><a href="raster.html">Raster analysis</a></li>
     <li><a href="vector.html">Vector analysis</a></li>
     <li><a href="imagery.html">Image processing</a></li>
@@ -68,6 +68,22 @@
         (<a href="https://ncsu-geoforall-lab.github.io/uav-lidar-analytics-course/assignments/python.html">alternative material</a>)
     </li>
 </ul>
+
+<figure>
+<img src="img/index.png">
+<figure>
+<!--
+v.net.path arc_layer=1 node_layer=1 output=path input=streets <<EOF
+1 632400 225373 642623 222303
+EOF
+g.region raster=elevation
+r.grow.distance input=shortest distance=distance
+v.mkgrid map=path_hexa grid=15,15 -h
+g.region vector=path_hexa
+v.rast.stats map=path_hexa raster=distance column_prefix=distance method=average
+v.to.rast input=path_hexa output=path_hexa use=attr attribute_column=distance_average
+r.colors -n map=path_hexa color=viridis
+-->
 
 </main>
 

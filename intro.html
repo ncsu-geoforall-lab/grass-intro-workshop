@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Introduction to GRASS GIS</title>
+
+<link rel="shortcut icon" href="favicon.png" />
+
+<link href="layout.css" rel="stylesheet" type="text/css" media="screen">
+<link href="style.css" rel="stylesheet" type="text/css" media="screen">
+
+</head>
+
+<body>
+
+<div id="outercontainer">
+<div id="container">
+
+<header>
+<div id="header-image"><p><a href="index.html">Introduction to GRASS GIS</a></p></div>
+
+</header>
+
+<main>
+
+<!-- This is a generated file. Do not edit. -->
+<h1>Introduction</h1>
+
+
+<h2>Start</h2>
+
+
+<h3>GRASS data structure</h3>
+
+For this introduction we create new mapset intro to keep data organized.
+
+<figure>
+<img src="img/intro/intro.png">
+<figcaption>Select a GRASS GIS Spatial Database, Location and Mapset at the beginning</figcaption>
+</figure>
+
+
+<h2>Display</h2>
+
+
+<h3>GRASS GUI: Add raster map elev_lid792_1m</h3>
+
+<figure>
+<img src="img/intro/add_elev_lid.png">
+<figcaption>Display a raster map</figcaption>
+</figure>
+
+
+<h3>Display elevation legend</h3>
+
+<figure>
+<img src="img/intro/legend.png">
+<figcaption>Show and hide legend</figcaption>
+</figure>
+
+
+<h2>GRASS modules</h2>
+
+GRASS functionality is available through modules (tools). Modules
+respect following naming conventions:
+
+<p>
+<table>
+    <tbody>
+        <tr>
+            <th>group</th>
+            <th>prefix</th>
+            <th>examples</th>
+        </tr>
+        <tr>
+            <td>general</td>
+            <td>g.*</td>
+            <td>g.list, g.remove, g.copy</td>
+        </tr>
+        <tr>
+            <td>raster</td>
+            <td>r.*</td>
+            <td>r.univar, r.neighbors, r.contour</td>
+        </tr>
+        <tr>
+            <td>vector</td>
+            <td>v.*</td>
+            <td>v.info, v.generalize, v.db.select</td>
+        </tr>
+        <tr>
+            <td>imagery</td>
+            <td>i.*</td>
+            <td>i.segment, i.cluster, i.colors.enhance</td>
+        </tr>
+        <tr>
+            <td>3D raster</td>
+            <td>r3.*</td>
+            <td>r3.info, r3.to.rast, r3.colors</td>
+        </tr>
+        <tr>
+            <td>temporal</td>
+            <td>t.*</td>
+            <td>t.list, t.rast.aggregate, t.vect.univar</td>
+        </tr>
+        <tr>
+            <td>...</td>
+            <td>...</td>
+            <td>...</td>
+        </tr>
+    </tbody>
+</table>
+
+
+<h3>Finding and running a module</h3>
+
+Type name or keyword in Search:
+
+<figure>
+<img src="img/intro/module_search.png">
+<figcaption>Search for a module in module tree</figcaption>
+</figure>
+
+<p>
+Raster > Reports and statistics > Basic raster metadata
+
+<figure>
+<img src="img/intro/module_menu.png">
+<figcaption>Select a module from main menu</figcaption>
+</figure>
+
+
+<h3>Running a module as a command</h3>
+
+
+
+<figure>
+<img src="img/intro/module_type.png">
+<figcaption>Type name of the module</figcaption>
+</figure>
+
+
+<h2>Region settings</h2>
+
+Before we use a module to compute a new raster map,
+we must set properly <em>computational region</em>.
+All raster computations will be performed in the specified
+extent and with the given resolution.
+
+<pre>
+g.region -p
+
+north:      220750
+south:      220000
+west:       638300
+east:       639000
+nsres:      1
+ewres:      1
+rows:       750
+cols:       700
+cells:      525000
+</pre>
+
+<figure>
+<img src="img/intro/region.png">
+<figcaption>Computational region extent (red) set to match the smaller raster map</figcaption>
+</figure>
+
+<p>
+Set the computational extent and resolution of the mapset to match map
+<code>elev_lid792_1m</code>.
+We can set it to match a raster map like this:
+
+<figure>
+<img src="img/intro/region_set.png">
+<figcaption>Set computational region extent and resolution using a raster map</figcaption>
+</figure>
+
+
+<h2>Running modules</h2>
+
+
+<h3>Module example: r.slope.aspect</h3>
+Raster > Terrain analysis > Slope and aspect
+
+<figure>
+<img src="img/intro/rslope_1.png">
+<figcaption>Select input elevation raster map</figcaption>
+</figure>
+
+<figure>
+<img src="img/intro/rslope_2.png">
+<figcaption>
+    Enter names of output raster maps.
+    Note also the corresponding command at the bottom of the GUI dialog.
+</figcaption>
+</figure>
+
+<figure>
+<img src="img/intro/rslope_3.png">
+<figcaption>Use manual included in the GUI dialog to refer to details</figcaption>
+</figure>
+
+<figure>
+<img src="img/intro/rslope_4.png">
+<figcaption>
+    Press Run (1) to compute. When computed result is added to Layer Manager
+    and Map Display. Use Close (2) to close the window.
+</figcaption>
+</figure>
+
+
+
+<h2>Learn more</h2>
+
+<ul>
+    <li><a href="https://www.youtube.com/watch?v=9fcBvYetIsM">Getting started with GRASS GIS GUI video</a>
+    <li><a href="https://grass.osgeo.org/grass70/manuals/wxGUI.html">GRASS GIS GUI</a> (graphical user interface manual)</li>
+    <li><a href="https://grass.osgeo.org/grass72/manuals/wxGUI.modules.html">Understanding module GUI dialogs</a></li>
+    <li>
+        Similar introduction as
+        <a href="http://www4.ncsu.edu/~akratoc/GRASS_intro/">a web page</a>
+        and as
+        <a href="http://fatra.cnr.ncsu.edu/temporal-grass-workshop/GRASS_intro.pdf">PDF slides</a>
+    </li>
+    <li>
+        Browse GRASS GIS modules:
+        <a href="http://grass.osgeo.org/grass70/manuals/topics.html">by topic</a>,
+        <a href="http://grass.osgeo.org/grass70/manuals/keywords.html">by keyword</a> and
+        <a href="http://grass.osgeo.org/grass70/manuals/full_index.html">by individual modules</a>
+    </li>
+</ul>
+
+</main>
+
+<footer>
+
+<nav>
+<ul>
+<li title="To the main index page">
+    <a href="index.html">Main page</a>
+</li>
+<li title="Use, fork, modify, contribute">
+    <a href="https://github.com/ncsu-geoforall-lab/grass-intro-workshop" target='_blank'>GitHub repository</a>
+</li>
+<li title="Copyright and license (not applicable to linked materials)">
+    <a href='http://creativecommons.org/licenses/by-sa/4.0/' target='_blank'>CC BY-SA</a>
+    2014-2016 <a href="http://www4.ncsu.edu/~vpetras/">Vaclav Petras</a> &amp;
+    <a href="http://geospatial.ncsu.edu/osgeorel/" target='_blank'>NCSU GeoForAll Lab</a> members
+</li>
+</ul>
+</nav>
+
+</footer>
+
+</div>
+</div>
+
+</body>
+</html>
