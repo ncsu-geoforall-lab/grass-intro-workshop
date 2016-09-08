@@ -2,7 +2,10 @@
 
 <h2>Raster algebra</h2>
 
-<h2>if statement</h2>
+<em>Raster algebra</em> (or <em>raster map algebra</em>) is probably the
+most general way of manipulating rasters which is accessible to the user.
+
+<h3>if statement</h3>
 
 Let's determine forested areas which are higher then certain elevation.
 Set computational region (both extent and resolution) to the landclass raster:
@@ -33,7 +36,7 @@ r.mapcalc "forest_high = if(elevation > 120 &amp;&amp; landclass96 == 5, 1, null
 
 <h2>Advanced raster algebra</h2>
 
-<h3>eval function</h3>
+<h3><code>eval</code> function</h3>
 
 If the output of the computation should be only one map
 but the expression is so complex that it is better
@@ -44,7 +47,7 @@ r.mapcalc "eval(elev_200 = elevation - 200, elev_5 = 5 * elevation, elev_p = pow
 </pre></code>
 
 
-<h3>neighborhood operator []</h3>
+<h3>neighborhood operator <code>[ , ]</code></h3>
 
 Apply low pass filter (smoothing) on a Landsat image using <em>r.mapcalc</em>:
 
