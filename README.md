@@ -8,27 +8,27 @@ The workshop page is availabe at:
 Build and publish
 -----------------
 
-Create a new clone of the repository. Name the directory `grass-intro-workshop-gh-pages` and place it at the same level as the clone where you work with master branch.
+Use the dedicated script to get another clone with the `gh-pages` branch:
 
-    git clone git@github.com:ncsu-geoforall-lab/grass-intro-workshop.git grass-intro-workshop-gh-pages
+    ./get-gh-pages-branch.sh
 
-Checkout `gh-pages` branch:
+The new clone will be created in the directory `build`. Most of the time
+you don't need to worry about the repository in there because you will
+be just using scripts to manipulate it.
 
-    cd grass-intro-workshop-gh-pages
-    git checkout gh-pages
+Use the build script to build the pages locally into the `build` directory:
 
-In your clone of the repository where you are in master branch, use `./build-pages.sh` to build the pages.
+    ./build.sh
 
-Commit and push changes in `grass-intro-workshop-gh-pages` repository to publish them. Do not forget to commit and push changes also in the master branch repository.
+Once you finished all your changes and used Git (add, commit, push)
+to get them to the repository, use the publish script to publish the
+webpage online:
 
-Note pages are created using the guide available at:
-
-* https://help.github.com/articles/creating-project-pages-manually/
-
+    ./publish.sh
 
 License
 -------
 
 The text and images in this repository are under CC BY-SA 4.0 license.
 
-Note that a lot of things is just linked material from different sources.
+Note that the license does not apply to the linked material.
