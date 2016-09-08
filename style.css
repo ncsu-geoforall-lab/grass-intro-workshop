@@ -264,6 +264,8 @@ figure {
     display: table;
     max-width: 100%;
     margin: 10px auto; /* not needed unless you want centered */
+    padding-top: 1em;
+    padding-bottom: 2em;
 }
 
 figcaption::before {
@@ -272,10 +274,33 @@ figcaption::before {
 
 figcaption {
     font-style: italic;
+    padding-top: 0.2em;
 }
 
 iframe {
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
+
+
+table {
+    font-size: 100%;
+}
+
+/* default style is too spread out */
+table td, table th {
+    padding-left: 0.5em;
+    padding-right: 0.2em;
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+}
+
+/* do table using alternate colors of rows */
+table tr:nth-child(odd) {
+    background: #EEE;
+}
+
+table tr:nth-child(even) {
+    background: #FFF;
 }
