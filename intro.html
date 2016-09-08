@@ -1,10 +1,7 @@
 <h1>Introduction</h1>
 
 
-<h2>Start</h2>
-
-
-<h3>GRASS data structure</h3>
+<h2>Start and GRASS data structure</h2>
 
 For this introduction we create new mapset intro to keep data organized.
 
@@ -13,11 +10,22 @@ For this introduction we create new mapset intro to keep data organized.
 <figcaption>Select a GRASS GIS Spatial Database, Location and Mapset at the beginning</figcaption>
 </figure>
 
+<figure>
+<img src="img/intro/grass_database.png">
+<figcaption>GRASS GIS Spatial Database structure</figcaption>
+</figure>
+
 
 <h2>Display</h2>
 
 
-<h3>GRASS GUI: Add raster map elev_lid792_1m</h3>
+<h3>Add raster map</h3>
+
+Let's add raster map called <em>elev_lid792_1m</em> to the Layer Manager
+so that it is displayed in the Map Display.
+You can either use the add raster icon in the toolbar or
+you can use main menu <em>File &rarr; Map display &rarr; Add raster</em>.
+Then select raster map from the selection.
 
 <figure>
 <img src="img/intro/add_elev_lid.png">
@@ -25,7 +33,7 @@ For this introduction we create new mapset intro to keep data organized.
 </figure>
 
 
-<h3>Display elevation legend</h3>
+<h3>Display legend</h3>
 
 <figure>
 <img src="img/intro/legend.png">
@@ -84,18 +92,27 @@ respect following naming conventions:
     </tbody>
 </table>
 
+These are the main groups of modules. There is few more for specific
+purposes. Note also that some modules have multiple dots in their names.
+This often suggests further grouping. For example, modules staring with
+<em>v.net.</em> deal with vector network analysis.
+
 
 <h3>Finding and running a module</h3>
 
-Type name or keyword in Search:
+Tp find a module for your analysis, type the term into the search box
+in the <em>Search modules</em> tab, keep pressing Enter until you find
+your module.
 
 <figure>
 <img src="img/intro/module_search.png">
 <figcaption>Search for a module in module tree</figcaption>
 </figure>
 
-<p>
-Raster > Reports and statistics > Basic raster metadata
+Alternatively, you can just browse through the module tree
+and that's what you can do in the main menu as well.
+For example, to find information about a raster map, use:
+<em>Raster &rarr; Reports and statistics &rarr; Basic raster metadata</em>.
 
 <figure>
 <img src="img/intro/module_menu.png">
@@ -105,12 +122,37 @@ Raster > Reports and statistics > Basic raster metadata
 
 <h3>Running a module as a command</h3>
 
-
+If you already know the name of the module, you can just use it in the
+command line. The GUI offers a <em>Command console</em> tab with command
+line specifically build for running GRASS GIS modules.
+If you type module name there, you will get suggestions for automatic
+completion of the name. After pressing Enter, you will get GUI dialog
+for the module.
 
 <figure>
 <img src="img/intro/module_type.png">
-<figcaption>Type name of the module</figcaption>
+<figcaption>Automatic suggestions when typing name of the module</figcaption>
 </figure>
+
+You can use the command line to run also whole commands for example
+when you get a command, i.e. module and list of parameters, in the instructions.
+
+
+<h3>Module parameters</h3>
+
+<figure>
+<img src="img/intro/module_parameters.png">
+<figcaption>Module GUI dialog</figcaption>
+</figure>
+
+The same analysis can be done using the following command:
+
+<code><pre>
+r.neighbors -c input=elevation output=elev_smooth size=5
+</pre></code>
+
+Conversely, you can fill the GUI dialog parameter by parameter
+when you have the command.
 
 
 <h2>Region settings</h2>
@@ -120,9 +162,15 @@ we must set properly <em>computational region</em>.
 All raster computations will be performed in the specified
 extent and with the given resolution.
 
-<pre>
-g.region -p
+The numeric values of computational region can be checked using:
 
+<code><pre>
+g.region -p
+</pre></code>
+
+After executing the command you will get something like this:
+
+<pre>
 north:      220750
 south:      220000
 west:       638300
@@ -152,9 +200,9 @@ We can set it to match a raster map like this:
 
 <h2>Running modules</h2>
 
-
-<h3>Module example: r.slope.aspect</h3>
-Raster > Terrain analysis > Slope and aspect
+Find the module for computing slope and aspect in menu or the module
+tree under <em>Raster &rarr; Terrain analysis &rarr; Slope and aspect</em>
+or simply run <em>r.slope.aspect</em>.
 
 <figure>
 <img src="img/intro/rslope_1.png">
